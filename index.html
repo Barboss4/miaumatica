@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#8064d8">
+  <meta name="description" content="Miaumática: matemática com um gatinho virtual, desafios progressivos e recompensas!">
+  <title>Miaumática — Aprender é uma aventura!</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // O GitHub Pages já serve index.html na raiz. Se alguém abrir o arquivo
+    // explicitamente, limpamos o endereço sem recarregar a página.
+    if (/^https?:$/.test(location.protocol) && location.pathname.endsWith('/index.html')) {
+      history.replaceState(null, '', location.pathname.slice(0, -10) + location.search + location.hash);
+    }
+  </script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <div class="loading-screen" role="status">🐱 Preparando a Miaumática...</div>
+  </div>
+  <div id="announcements" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
