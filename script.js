@@ -277,7 +277,11 @@
       op: q.op, level: q.level, a: q.a, b: q.b, answer: q.answer,
       availableOn: typeof q.availableOn === 'string' && /^\d{4}-\d\d-\d\d$/.test(q.availableOn) ? q.availableOn : dayKey()
     }));
-    if (  SCENES.some(x => x.id === input.selectedScene) &&  stage(st.xp, st.careHearts) >=    SCENES.find(x => x.id === input.selectedScene).requiredStage) st.selectedScene = input.selectedScene;
+    if (SCENES.some(x => x.id === input.selectedScene) &&
+        stage(st.xp, st.careHearts) >= SCENES.find(x => x.id === input.selectedScene).requiredStage) {
+      st.selectedScene = input.selectedScene;
+    }
+    if (input.session && isSessionValid(input.session)) {
       const s = input.session;
       st.session = {
         type: s.type, operation: s.operation, level: s.level,
@@ -1098,7 +1102,7 @@
       <div class="progress-label"><span>Aprendizado para evoluir</span><span>${info.text}</span></div>${track(info.fraction)}
       <div class="progress-label care-label"><span>💗 Cuidado para evoluir</span><span>${care.text}</span></div>${track(care.fraction, true)}
       <div class="care-card space-top"><div><h3>🐟 Hora do lanchinho</h3><p>${fedToday >= 2 ? `${safeText(state.catName)} já está satisfeito hoje. Volte amanhã para cuidar de novo!` : `Cada lanchinho cria um coração de cuidado. Você pode alimentar ${2-fedToday} vez(es) hoje.`}</p></div><div class="care-actions"><span class="food-count">🐟 ${number(state.food)}</span><button class="btn btn-gold" data-action="${state.food < 1 ? 'go-food-shop' : 'feed-cat'}" ${fedToday >= 2 ? 'disabled' : ''}>${state.food < 1 ? 'PEGAR COMIDA' : 'ALIMENTAR'}</button></div></div>
-      <div class="card space-top"><h3>🌄 Escolha um cenário</h3><div class="scene-selector">${SCENES.map((x,i) => `<button class="scene-option ${state.selectedScene === x.id ? 'selected' : ''}" data-action="scene" data-scene="${x.id}" ${st < i+1 ? 'disabled' : ''}>${x.icon}<br>${x.name}<br><small>${st < i+1 ? `Estágio ${i+1}` : 'Liberado'}</small></button>`).join('')}</div></div>
+      <div class="card space-top"><h3>🌄 Escolha um cenário</h3><div class="scene-selector">${SCENES.map(x => `<button class="scene-option ${state.selectedScene === x.id ? 'selected' : ''}" data-action="scene" data-scene="${x.id}" ${st < x.requiredStage ? 'disabled' : ''}>${x.icon}<br>${x.name}<br><small>${st < x.requiredStage ? `Estágio ${x.requiredStage}` : 'Liberado'}</small></button>`).join('')}</div></div>
       <button class="btn btn-gold btn-large btn-full space-top" data-action="navigate" data-view="shop">🛍️ LOJA DE PERSONALIZAÇÃO</button></main>`;
   }
   function shop() {
