@@ -88,11 +88,11 @@
   const STAGE_CARE = [0, 2, 6, 12, 20];
   const STAGES = ['Filhote', 'Gatinho curioso', 'Gatinho aventureiro', 'Gatinho inteligente', 'Gatinho mestre'];
   const SCENES = [
-    { id: 'room', name: 'Quarto', icon: '🛏️' },
-    { id: 'garden', name: 'Jardim', icon: '🌼' },
-    { id: 'park', name: 'Parque', icon: '🌳' },
-    { id: 'library', name: 'Biblioteca', icon: '📚' },
-    { id: 'palace', name: 'Casa especial', icon: '🏰' }
+    { id: 'room', name: 'Quarto', icon: '🛏️', requiredStage: 1 },
+    { id: 'garden', name: 'Jardim', icon: '🌼', requiredStage: 1 },
+    { id: 'park', name: 'Parque', icon: '🌳', requiredStage: 2 },
+    { id: 'library', name: 'Biblioteca', icon: '📚', requiredStage: 3 },
+    { id: 'palace', name: 'Casa especial', icon: '🏰', requiredStage: 5 }
   ];
   const COLORS = [
     { id: 'white', name: 'Branco', cost: 0, hex: '#fff9ee', requiredLevel: 0 },
@@ -277,8 +277,7 @@
       op: q.op, level: q.level, a: q.a, b: q.b, answer: q.answer,
       availableOn: typeof q.availableOn === 'string' && /^\d{4}-\d\d-\d\d$/.test(q.availableOn) ? q.availableOn : dayKey()
     }));
-    if (SCENES.some(x => x.id === input.selectedScene) && SCENES.findIndex(x => x.id === input.selectedScene) < stage(st.xp, st.careHearts)) st.selectedScene = input.selectedScene;
-    if (input.session && isSessionValid(input.session)) {
+    if (  SCENES.some(x => x.id === input.selectedScene) &&  stage(st.xp, st.careHearts) >=    SCENES.find(x => x.id === input.selectedScene).requiredStage) st.selectedScene = input.selectedScene;
       const s = input.session;
       st.session = {
         type: s.type, operation: s.operation, level: s.level,
@@ -1342,7 +1341,7 @@
     if (action === 'go-food-shop') { ui.shopTab = 'food'; return navigate('shop'); }
     if (action === 'scene') {
       const idx = SCENES.findIndex(x => x.id === node.dataset.scene);
-      if (idx >= 0 && idx < stageNumber()) { state.selectedScene = SCENES[idx].id; save(); render(); }
+      if (idx >= 0 && stageNumber() >= SCENES[idx].requiredStage) { state.selectedScene = SCENES[idx].id; save(); render(); }
       return;
     }
     if (action === 'tab') { ui.shopTab = ['accessories','food', ...(FURNITURE_ENABLED ? ['furniture'] : [])].includes(node.dataset.tab) ? node.dataset.tab : 'colors'; ui.preview = null; return render(); }
