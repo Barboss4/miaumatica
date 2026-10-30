@@ -970,7 +970,7 @@
   }
   function onboarding() {
     return `<main class="onboarding-screen"><div class="onboarding-card"><div class="onboarding-cat">${catSVG()}</div><p class="eyebrow">Uma nova amizade começa</p><h1>Oi! Eu vou aprender com você 🐾</h1><p class="muted">Antes da aventura, conte para mim como vocês vão se chamar.</p>
-      <label class="form-field" for="first-name">Nome da criança<input class="text-input" id="first-name" maxlength="28" autocomplete="given-name" placeholder="Ex.: Ana"></label>
+      <label class="form-field" for="first-name">Nome da criança<input class="text-input" id="first-name" maxlength="28" autocomplete="given-name" placeholder="Ex.: Eliza"></label>
       <label class="form-field space-top" for="cat-name">Nome do gatinho<input class="text-input" id="cat-name" maxlength="20" autocomplete="off" value="Mimi" placeholder="Ex.: Mimi"></label>
       <button class="btn btn-primary btn-large btn-full space-top" data-action="finish-onboarding">COMEÇAR A AVENTURA ▶</button>
       <p class="onboarding-note">🔒 Os nomes e o progresso ficam somente neste dispositivo.</p></div></main>`;
